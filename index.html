@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Code Olympics 2025</title>
+        <style>
+            :root{--bg: #0b1720;--bg2: #071022;--card: #071827;--txt: #eaf6f8;--mut: #adc5cf;--teal: #14B8A6;--teal2: #0fa78f;--o: #e74c3c;--dur: .36s;--okb: rgba(20, 184, 150, .10)}*{box-sizing:border-box;margin:0;font-family:system-ui, Segoe UI, Arial, sans-serif}html,body{height:100%}body{background:var(--bg);color:var(--txt);transition:background var(--dur), color var(--dur);display:flex;align-items:center;justify-content:center;padding:10px}.app{width:100%;max-width:800px;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));box-shadow:0 14px 40px rgba(0, 0, 0, .6);min-height:500px;display:flex;flex-direction:column}.header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}h1{font-size:22px;margin:0;font-weight:700}h2{font-size:13px;margin:0;color:var(--mut)}.theme{background:linear-gradient(90deg, var(--teal), var(--teal2));border:0;color:#012;padding:8px;border-radius:10px;cursor:pointer;font-size:14px}.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px}.tab{padding:10px 14px;border-radius:10px;border:0;background:transparent;color:var(--mut);cursor:pointer;font-weight:700;transition:all .14s;outline:none;font-size:13px}.tab.active{background:linear-gradient(90deg, rgba(20, 184, 150, .12), rgba(20, 184, 150, .06));color:var(--txt)}.card{background:linear-gradient(180deg, #071827, #071a28);padding:20px;border-radius:12px;flex:1;display:flex;flex-direction:column;min-height:400px}.title{font-size:20px;margin:0 0 6px;font-weight:700}.hint{font-size:13px;color:var(--mut);margin:0 0 12px}.display{min-height:60px;font-size:20px;letter-spacing:1px;margin-bottom:15px;word-break:break-word;flex:1;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4}.ctrls{display:flex;gap:8px;align-items:center;margin-top:auto}input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255, 255, 255, .04);background:rgba(255, 255, 255, .02);color:var(--txt);font-size:15px;outline:none}.btn{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg, var(--teal), var(--teal2));color:#012;cursor:pointer;font-weight:700;font-size:13px}.btn.alt{background:transparent;border:1px solid rgba(255, 255, 255, .04);color:var(--mut)}input:focus-visible{outline:2px solid var(--teal);outline-offset:1px}.btn:focus-visible,.theme:focus-visible,.tab:focus-visible,.grid button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}.extra{margin-top:15px;flex:1;display:flex;align-items:center;justify-content:center}.grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;margin:0 auto;width:100%;max-width:300px}.grid button{height:80px;font-size:32px;border-radius:10px;border:0;background:linear-gradient(180deg, #0b2633, #072022);color:var(--txt);cursor:pointer;transition:all .2s}.grid button:hover{transform:scale(1.05)}.grid button.x{background:var(--teal)}.grid button.o{background:var(--o)}.msg{min-height:20px;margin-top:12px;font-weight:700;color:var(--mut);text-align:center;font-size:14px}.ok{animation:okPulse .9s ease-out}@keyframes okPulse{0%{box-shadow:0 0 0 0 var(--okb)}70%{box-shadow:0 0 0 12px rgba(20, 184, 150, 0)}100%{box-shadow:0 0 0 0 rgba(20, 184, 150, 0)}}.bad{animation:shake .36s}@keyframes shake{0%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}100%{transform:translateX(0)}}body.light{background:#f6fbff;color:#072032}body.light .app{background:#fff;box-shadow:0 18px 36px rgba(2, 8, 12, .06)}body.light .tab{color:#0d2f44}body.light .tab.active{background:linear-gradient(90deg, #0ea5e9, #10b981);color:#fff}body.light .card{background:#fff;color:#072032}body.light input{background:#fff;color:#072032;border:1px solid #cbd5e1}body.light .btn.alt{color:#334155;border-color:#cbd5e1}body.light .grid button{background:linear-gradient(180deg, #fff, #f3fbff);color:#072032;border:1px solid #d1d5db}
+            body.light h2 { color: #1e293b; }
+            body.light .hint { color: #475569; }
+            body.light .msg { color: #334155; }
+            @media(max-width:600px){.grid button{height:70px;font-size:28px}.app{padding:15px}.card{padding:15px}}@media(max-width:420px){.header{flex-direction:column;align-items:flex-start;gap:12px}.theme{align-self:flex-end;margin-top:-38px}.ctrls{flex-direction:column;align-items:stretch}.display div[style*="font-size:24px"]{font-size:20px !important;letter-spacing:6px !important}}@media(prefers-reduced-motion:reduce){*{animation-duration:0s !important;transition-duration:0s !important}}
+        </style>
+    </head>
+    <body>
+        <div class="app">
+            <header class="header">
+                <div class="brand">
+                    <h1 class="h1">Code Olympics 2025</h1>
+                    <br/>
+                    <p class="h3">Classic Tic-Tac-Toe, Hangman & Other Word Games</p>
+                </div>
+                <button id="thm" class="theme">Dark</button>
+            </header>
+            <nav id="tbs" class="tabs" role="tablist"></nav>
+            <main class="card">
+                <h2 id="ttl" class="title"></h2>
+                <p id="sub" class="hint"></p>
+                <div id="dsp" class="display"></div>
+                <div class="ctrls" id="ctr">
+                    <input id="inp" class="input" placeholder="Type your guess..." autocomplete="off" spellcheck="false">
+                    <button id="subm" class="btn">Submit</button>
+                    <button id="hnt" class="btn alt">Hint</button>
+                    <button id="rst" class="btn alt">Restart</button>
+                </div>
+                <div id="ext" class="extra"></div>
+                <div id="msg" class="msg" aria-live="polite"></div>
+            </main>
+        </div>
+        <script>
+            // global state and stats
+            let g = 0, d = [], s = 0, q = '', a = '', t = 0, m = 0, mem = {};
+            let sts = JSON.parse(localStorage.getItem('sts')) || { ttt: [0, 0, 0], hng: [0, 0], ang: [0, 0], bld: [0, 0] };
+            // dom element lookup
+            function els() {
+                return {
+                    tbs: document.getElementById('tbs'),
+                    ttl: document.getElementById('ttl'),
+                    sub: document.getElementById('sub'),
+                    dsp: document.getElementById('dsp'),
+                    ext: document.getElementById('ext'),
+                    msg: document.getElementById('msg'),
+                    inp: document.getElementById('inp'),
+                    subm: document.getElementById('subm'),
+                    rst: document.getElementById('rst'),
+                    hnt: document.getElementById('hnt'),
+                    thm: document.getElementById('thm'),
+                    ctr: document.getElementById('ctr')
+                };
+            }
+            const E = els();
+            // core app functions
+            // resets game state variables and ui
+            function rst() {
+                s = 0;
+                q = '';
+                a = '';
+                t = 0;
+                m = 0;
+                E.inp.value = '';
+                E.msg.textContent = '';
+                E.dsp.textContent = '';
+                E.ext.innerHTML = '';
+                E.inp.disabled = false;
+                E.subm.disabled = false;
+                E.hnt.disabled = false;
+                E.hnt.style.display = 'block';
+                E.ctr.style.display = 'flex';
+                E.ctr.style.justifyContent = 'flex-start';
+                E.inp.style.display = 'block';
+                E.subm.style.display = 'block';
+                E.rst.style.display = 'block';
+                E.dsp.style.flexDirection = 'row';
+            }
+            // main ui render function
+            function upd(obj) {
+                E.ttl.textContent = obj.nm;
+                E.sub.textContent = obj.hn;
+                E.msg.textContent = '';
+                E.ext.innerHTML = '';
+                // update controls based on game type
+                if (obj.id === 'ttt') {
+                    E.ctr.style.display = 'flex';
+                    E.ctr.style.justifyContent = 'flex-end';
+                    E.inp.style.display = 'none';
+                    E.subm.style.display = 'none';
+                    E.rst.style.display = 'block';
+                    E.hnt.style.display = 'none';
+                    setTimeout(() => E.rst.focus(), 100);
+                } else if (obj.id === 'sts') {
+                    E.ctr.style.display = 'none';
+                    E.hnt.style.display = 'none';
+                } else {
+                    E.ctr.style.display = 'flex';
+                    E.ctr.style.justifyContent = 'flex-start';
+                    E.inp.style.display = 'block';
+                    E.subm.style.display = 'block';
+                    E.rst.style.display = 'block';
+                    E.hnt.style.display = 'block';
+                    E.hnt.disabled = obj.hnu;
+                    E.inp.placeholder = obj.id === 'hng' ? 'Type a letter...' : 'Type your guess...';
+                    E.inp.disabled = false;
+                    E.subm.disabled = false;
+                    setTimeout(() => E.inp.focus(), 100);
+                }
+                // update game display and message
+                if (obj.id === 'ang') {
+                    E.dsp.textContent = 'Unscramble: ' + a;
+                    E.msg.textContent = (obj.tr - s) + ' guesses left.';
+                } else if (obj.id === 'hng') {
+                    let wd = '';
+                    for (let t = 0; t < obj.wd.length; t++) {
+                        wd += (obj.gu.includes(obj.wd[t]) ? obj.wd[t] : '_') + ' ';
+                    }
+                    E.dsp.innerHTML = '<div style="font-size:24px;letter-spacing:8px;margin-bottom:10px">' + wd.trim() + '</div>';
+                    E.msg.textContent = (obj.tr - obj.wg) + ' guesses left.';
+                } else if (obj.id === 'bld') {
+                    E.dsp.textContent = 'Available letters: ' + obj.lt.join(' ');
+                    E.msg.textContent = 'Find ' + obj.vl.length + ' words. ' + (obj.tr - s) + ' guesses left.';
+                } else if (obj.id === 'ttt') {
+                    E.msg.textContent = 'Your turn (X) vs AI (O)';
+                    bld();
+                } else if (obj.id === 'sts') {
+                    obj.ini();
+                } else E.dsp.textContent = q;
+                // update active tab style
+                Array.from(E.tbs.children).forEach((b, idx) => {
+                    b.className = (idx === g) ? 'tab active' : 'tab';
+                    b.setAttribute('aria-selected', idx === g);
+                });
+            }
+            // dynamically builds the ttt grid
+            function bld() {
+                E.dsp.innerHTML = '';
+                const w = document.createElement('div');
+                w.className = 'grid';
+                for (let t = 0; t < 9; t++) {
+                    const b = document.createElement('button');
+                    const c = q.charAt(t);
+                    b.textContent = c === ' ' ? '' : c;
+                    b.className = c === 'X' ? 'x' : (c === 'O' ? 'o' : '');
+                    b.onclick = (function (idx) {
+                        return function () {
+                            d[g].sub(idx);
+                        };
+                    })(t);
+                    w.appendChild(b);
+                }
+                E.dsp.appendChild(w);
+            }
+            // ui feedback animations
+            function ok() {
+                E.dsp.classList.add('ok');
+                setTimeout(() => E.dsp.classList.remove('ok'), 900);
+            }
+            function bad() {
+                E.dsp.classList.add('bad');
+                setTimeout(() => E.dsp.classList.remove('bad'), 360);
+            }
+            // handles game end state and stats saving
+            function end(txt) {
+                E.msg.textContent = txt;
+                E.inp.disabled = true;
+                E.subm.disabled = true;
+                E.hnt.disabled = true;
+                try {
+                    let k = d[g].id;
+                    if (!k || k === 'sts') return;
+                    let w = (txt.includes('win') || txt.includes('Correct') || txt.includes('All words') || txt.includes('got it'));
+                    let l = (txt.includes('AI wins') || txt.includes('Game over'));
+                    let dr = (txt.includes('Draw'));
+                    if (l) sts[k][1]++;
+                    else if (w) sts[k][0]++;
+                    else if (dr) sts[k][2]++;
+                    localStorage.setItem('sts', JSON.stringify(sts));
+                } catch (e) {}
+            }
+            // ttt ai logic
+            // checks for ttt win state
+            function win(b) {
+                const w = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                    [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+                ];
+                for (let t = 0; t < 8; t++) {
+                    if (b[w[t][0]] !== ' ' && b[w[t][0]] === b[w[t][1]] && b[w[t][1]] === b[w[t][2]]) {
+                        return b[w[t][0]];
+                    }
+                }
+                return b.includes(' ') ? 0 : 'D';
+            }
+            // minimax algorithm
+            function mmx(b, p) {
+                const ky = b + p;
+                if (mem[ky] !== undefined) return mem[ky];
+                let r = win(b);
+                if (r === 'O') return mem[ky] = 10;
+                if (r === 'X') return mem[ky] = -10;
+                if (r === 'D') return mem[ky] = 0;
+                let bs = (p === 'O') ? -1000 : 1000;
+                for (let i = 0; i < 9; i++) {
+                    if (b[i] === ' ') {
+                        let nb = b.substring(0, i) + p + b.substring(i + 1);
+                        let s = mmx(nb, (p === 'O') ? 'X' : 'O');
+                        if (p === 'O') {
+                            bs = Math.max(bs, s);
+                        } else {
+                            bs = Math.min(bs, s);
+                        }
+                    }
+                }
+                return mem[ky] = bs;
+            }
+            // find best ai move
+            function aim() {
+                // 80% chance to play perfectly
+                if (Math.random() > 0.2) {
+                    let bs = -1000;
+                    let bm = -1;
+                    for (let i = 0; i < 9; i++) {
+                        if (q[i] === ' ') {
+                            let nb = q.substring(0, i) + 'O' + q.substring(i + 1);
+                            let s = mmx(nb, 'X');
+                            if (s > bs) {
+                                bs = s;
+                                bm = i;
+                            }
+                        }
+                    }
+                    return bm;
+                }
+                // 20% chance to play a random, non-optimal move
+                let avl = [];
+                for (let i = 0; i < 9; i++) {
+                    if (q[i] === ' ') {
+                        avl.push(i);
+                    }
+                }
+                if (avl.length > 0) {
+                    return avl[Math.random() * avl.length | 0];
+                }
+                return -1; // fallback
+            }
+            // game definitions
+            d = [{
+                    id: 'ttt',
+                    nm: 'Tic-Tac-Toe',
+                    hn: 'Click squares or use Numpad 1-9. You are X.',
+                    ini: function () {
+                        rst();
+                        q = '         ';
+                        this.ovr = false;
+                        mem = {};
+                    },
+                    sub: function (p) {
+                        if (this.ovr || q[p] !== ' ' || m === 1) return bad();
+                        q = q.substring(0, p) + 'X' + q.substring(p + 1);
+                        bld();
+                        let r = win(q);
+                        if (r === 'X') {
+                            this.ovr = true;
+                            end('You win!');
+                            return;
+                        }
+                        if (r === 'D') {
+                            this.ovr = true;
+                            end('Draw game!');
+                            return;
+                        }
+                        m = 1;
+                        const x = aim(); // uses the new, fallible aim()
+                        if (x >= 0) {
+                            q = q.substring(0, x) + 'O' + q.substring(x + 1);
+                            setTimeout(() => {
+                                bld();
+                                r = win(q);
+                                if (r === 'O') {
+                                    this.ovr = true;
+                                    end('AI wins!');
+                                } else if (r === 'D') {
+                                    this.ovr = true;
+                                    end('Draw game!');
+                                }
+                                m = 0;
+                            }, 300);
+                        } else {
+                            m = 0;
+                        }
+                    }
+                },
+                {
+                    id: 'hng',
+                    nm: 'Hangman',
+                    hn: 'Guess the word, letter by letter. 6 guesses allowed. Hint costs 1 guess and can only be used once.',
+                    ws: ["PYTHON", "JAVASCRIPT", "COMPUTER", "PROGRAM", "ALGORITHM", "FUNCTION", "VARIABLE", "HACKATHON", "CHAMPION", "DATABASE", "NETWORK", "SECURITY", "INTERFACE", "FRAMEWORK", "LIBRARY", "COMPONENT", "MODULE", "SYNTAX", "SEMANTICS", "DEBUGGING", "DEPLOYMENT"],
+                    ini: function () {
+                        rst();
+                        this.wd = this.ws[Math.random() * this.ws.length | 0];
+                        this.gu = [];
+                        this.wg = 0;
+                        this.tr = 6;
+                        this.hnu = false;
+                    },
+                    sub: function (v) {
+                        if (this.wg >= this.tr) return;
+                        v = v.toUpperCase().replace(/[^A-Z]/g, '').charAt(0);
+                        if (!v) return bad();
+                        // handle repeated guesses
+                        if (this.gu.includes(v)) {
+                            if (this.wd.includes(v)) {
+                                return bad(); // no penalty for correct repeat
+                            } else {
+                                this.wg++; // penalty for wrong repeat
+                                bad();
+                                if (this.wg >= this.tr) {
+                                    end('Game over! The word was: ' + this.wd);
+                                } else {
+                                    upd(this);
+                                }
+                                return;
+                            }
+                        }
+                        this.gu.push(v);
+                        if (this.wd.includes(v)) {
+                            ok();
+                            let wn = true;
+                            for (let t = 0; t < this.wd.length; t++) {
+                                if (!this.gu.includes(this.wd[t])) {
+                                    wn = false;
+                                    break;
+                                }
+                            }
+                            upd(this);
+                            if (wn) {
+                                end('Correct! The word was: ' + this.wd);
+                            }
+                        } else {
+                            this.wg++;
+                            bad();
+                            if (this.wg >= this.tr) {
+                                end('Game over! The word was: ' + this.wd);
+                            } else {
+                                upd(this);
+                            }
+                        }
+                    },
+                    hnt: function () {
+                        if (this.wg >= this.tr - 1) return; 
+                        let h = '';
+                        for (let i = 0; i < this.wd.length; i++) {
+                            if (!this.gu.includes(this.wd[i])) {
+                                h = this.wd[i];
+                                break;
+                            }
+                        }
+                        if (h) {
+                            this.wg++;
+                            this.gu.push(h);
+                            upd(this);
+                            E.msg.textContent = "Hint Used: Letter '" + h + "' revealed. " + (this.tr - this.wg) + " guesses left.";
+                            if (this.wg >= this.tr) {
+                                end('Game over! The word was: ' + this.wd);
+                            }
+                        }
+                    }
+                },
+                {
+                    id: 'ang',
+                    nm: 'Anagram',
+                    hn: 'Unscramble the letters to form a word. 6 guesses allowed. Hint costs 1 guess and can only be used once.',
+                    ws: ["PYTHON", "JAVASCRIPT", "COMPUTER", "PROGRAM", "ALGORITHM", "FUNCTION", "VARIABLE", "HACKATHON", "CHAMPION", "DATABASE", "NETWORK", "SECURITY", "INTERFACE", "FRAMEWORK", "LIBRARY", "COMPONENT", "MODULE", "SYNTAX", "SEMANTICS", "DEBUGGING", "DEPLOYMENT"],
+                    ini: function () {
+                        rst();
+                        q = this.ws[Math.random() * this.ws.length | 0];
+                        do {
+                            a = q.split('').sort(() => Math.random() - .5).join('');
+                        } while (a === q);
+                        this.tr = 6;
+                        this.hnu = false;
+                    },
+                    sub: function (v) {
+                        if (s >= this.tr) return;
+                        v = v.toUpperCase().replace(/[^A-Z]/g, '');
+                        s++;
+                        if (v === q) {
+                            ok();
+                            end('Correct! The word was ' + q);
+                        } else if (s >= this.tr) {
+                            end('Game over! Answer: ' + q);
+                        } else {
+                            bad();
+                            upd(this);
+                        }
+                    },
+                    hnt: function () {
+                        if (s >= this.tr - 1) return;
+                        s++;
+                        upd(this);
+                        E.msg.textContent = "Hint Used: First letter is '" + q[0] + "'. " + (this.tr - s) + " guesses left.";
+                        if (s >= this.tr) {
+                            end('Game over! Answer: ' + q);
+                        }
+                    }
+                },
+                {
+                    id: 'bld',
+                    nm: 'Word Builder',
+                    hn: 'Find all 4-letter words using the given letters. 8 guesses allowed. Hint costs 1 guess and can only be used once.',
+                    ws: {
+                        "STARE": ["STAR", "TARE", "TEAR", "RATE", "RATS", "TARS", "TEAS", "SEAT", "EAST", "EATS", "ARTS", "REST", "SEAR", "SERA", "ERAS"],
+                        "CRATE": ["CARE", "CART", "CATE", "RACE", "RATE", "TARE", "TEAR", "ACRE", "CERT", "RECT", "TRACE"],
+                        "SLATE": ["SALE", "SALT", "SATE", "SEAL", "SEAT", "SLAT", "LATE", "LAST", "LEAS", "LEST", "LETS", "EAST", "EATS", "ATES", "TEAL", "TEAS", "TALE", "TELA"],
+                        "PAINT": ["PAIN", "PANT", "PINT", "PITA", "ANTI", "TAIN", "TINA", "NIPA", "PATINA"],
+                        "BRAIN": ["BRAN", "RAIN", "RANI", "BARN", "BAIR", "BRIN", "BINA", "IRAN"],
+                        "LISTEN": ["LIST", "LENT", "LINE", "LINT", "LITE", "LETS", "LIEN", "LIES", "SENT", "SILT", "SINE", "SITE", "SLIT", "SNIT", "TILE", "TILS", "TINE", "TINS", "TIES", "NETS", "NEST", "NITS", "NITE", "ISLE", "LEIS", "LENS"]
+                    },
+                    ini: function () {
+                        rst();
+                        const k = Object.keys(this.ws)[Math.random() * Object.keys(this.ws).length | 0];
+                        this.lt = k.split('').sort(() => Math.random() - .5);
+                        this.vl = this.ws[k];
+                        this.f = [];
+                        this.tr = 8;
+                        this.hnu = false;
+                    },
+                    sub: function (v) {
+                        if (s >= this.tr) return;
+                        v = v.toUpperCase().replace(/[^A-Z]/g, '');
+                        if (this.f.includes(v)) {
+                            bad();
+                            return;
+                        }
+                        let l = [...this.lt];
+                        for (let t = 0; t < v.length; t++) {
+                            const p = l.indexOf(v[t]);
+                            if (p === -1) {
+                                s++;
+                                bad();
+                                upd(this);
+                                if (s >= this.tr) {
+                                    end('Game over! Possible: ' + this.vl.join(', '));
+                                } else {
+                                    let c = E.msg.textContent.split(' | ')[0];
+                                    if (!c.startsWith('Found:')) E.msg.textContent = (this.tr - s) + ' guesses left.';
+                                    else E.msg.textContent = c + ' | ' + (this.tr - s) + ' guesses left.';
+                                }
+                                return;
+                            }
+                            l.splice(p, 1);
+                        }
+                        if (this.vl.includes(v)) {
+                            this.f.push(v);
+                            ok();
+                            upd(this);
+                            if (this.f.length === this.vl.length) {
+                                end('All words found! ' + this.f.join(', '));
+                            } else {
+                                E.msg.textContent = 'Found: ' + v + ' | Total: ' + this.f.length + ' / ' + this.vl.length;
+                            }
+                        } else {
+                            s++;
+                            bad();
+                            upd(this);
+                            if (s >= this.tr) {
+                                end('Game over! Possible: ' + this.vl.join(', '));
+                            } else {
+                                let c = E.msg.textContent.split(' | ')[0];
+                                if (!c.startsWith('Found:')) E.msg.textContent = (this.tr - s) + ' guesses left.';
+                                else E.msg.textContent = c + ' | ' + (this.tr - s) + ' guesses left.';
+                            }
+                        }
+                    },
+                    hnt: function () {
+                        if (s >= this.tr - 1) return;
+                        let h = '';
+                        for (let i = 0; i < this.vl.length; i++) {
+                            if (!this.f.includes(this.vl[i])) {
+                                h = this.vl[i];
+                                break;
+                            }
+                        }
+                        if (h) {
+                            s++;
+                            upd(this);
+                            E.msg.textContent = "Hint Used: Try '" + h + "'. " + (this.tr - s) + " guesses left.";
+                            if (s >= this.tr) {
+                                end('Game over! Possible: ' + this.vl.join(', '));
+                            }
+                        }
+                    }
+                },
+                {
+                    id: 'sts',
+                    nm: 'Stats',
+                    hn: 'Your all-time Win / Loss / Draw record.',
+                    ini: function () {
+                        rst();
+                        E.ctr.style.display = 'none';
+                        E.dsp.style.flexDirection = 'column';
+                        let h = '<div style="text-align:left;line-height:1.8;font-size:14px">';
+                        h += '<b>Tic-Tac-Toe:</b> ' + sts.ttt[0] + ' Win / ' + sts.ttt[1] + ' Loss / ' + sts.ttt[2] + ' Draw<br>';
+                        h += '<b>Hangman:</b> ' + sts.hng[0] + ' Win / ' + sts.hng[1] + ' Loss<br>';
+                        h += '<b>Anagram:</b> ' + sts.ang[0] + ' Win / ' + sts.ang[1] + ' Loss<br>';
+                        h += '<b>Word Builder:</b> ' + sts.bld[0] + ' Win / ' + sts.bld[1] + ' Loss<br>';
+                        h += '</div><button id="clr" class="btn alt" style="margin-top:20px">Clear All Stats</button>';
+                        E.dsp.innerHTML = h;
+                        document.getElementById('clr').onclick = () => {
+                            sts = { ttt: [0, 0, 0], hng: [0, 0], ang: [0, 0], bld: [0, 0] };
+                            localStorage.removeItem('sts');
+                            this.ini();
+                        };
+                    },
+                    sub: function (v) {}
+                }
+            ];
+            // app initialization and event listeners
+            // game selection logic
+            const slc = (idx) => {
+                g = idx;
+                rst();
+                if (d[g].ini) d[g].ini();
+                upd(d[g]);
+            };
+            // main app entry point (iife)
+            (function () {
+                // build tabs
+                E.tbs.setAttribute('role', 'tablist');
+                for (let t = 0; t < d.length; t++) {
+                    const b = document.createElement('button');
+                    b.className = t === 0 ? 'tab active' : 'tab';
+                    b.textContent = d[t].nm;
+                    b.setAttribute('role', 'tab');
+                    b.setAttribute('aria-selected', t === 0);
+                    b.addEventListener('click', (function (idx) {
+                        return function () {
+                            slc(idx);
+                        };
+                    })(t));
+                    E.tbs.appendChild(b);
+                }
+                // theme persistence
+                const lcl = localStorage.getItem('t');
+                if (lcl === 'l') {
+                    document.body.classList.add('light');
+                }
+                const isL = document.body.classList.contains('light');
+                E.thm.textContent = isL ? '☀️' : '🌙';
+                document.body.classList.add(isL ? 'light' : 'dark');
+                E.thm.addEventListener('click', function () {
+                    document.body.classList.toggle('light');
+                    document.body.classList.toggle('dark');
+                    const isL = document.body.classList.contains('light');
+                    E.thm.textContent = isL ? '☀️' : '🌙';
+                    localStorage.setItem('t', isL ? 'l' : 'd');
+                });
+                // button event listeners
+                E.subm.addEventListener('click', function () {
+                    if (d[g].sub && !E.inp.disabled) d[g].sub(E.inp.value.trim());
+                    E.inp.value = '';
+                });
+                E.rst.addEventListener('click', function () {
+                    if (d[g].ini) d[g].ini();
+                    upd(d[g]);
+                });
+                E.hnt.addEventListener('click', function () {
+                    if (d[g].hnt && !d[g].hnu && !E.inp.disabled) {
+                        d[g].hnu = true;
+                        E.hnt.disabled = true;
+                        d[g].hnt();
+                    }
+                });
+                // keyboard navigation
+                document.addEventListener('keydown', function (ev) {
+                    const k = ev.key;
+                    if (document.activeElement !== E.inp) {
+                        if (d[g].id === 'ttt') {
+                            const num = parseInt(k, 10);
+                            if (!isNaN(num) && num >= 1 && num <= 9) d[g].sub(num - 1);
+                        }
+                        if (k === 'ArrowRight') {
+                            slc((g + 1) % d.length);
+                            ev.preventDefault();
+                        } else if (k === 'ArrowLeft') {
+                            slc((g - 1 + d.length) % d.length);
+                            ev.preventDefault();
+                        }
+                    }
+                });
+                // input field listeners
+                E.inp.addEventListener('keydown', function (ev) {
+                    if (ev.key === 'ArrowRight') {
+                        slc((g + 1) % d.length);
+                        ev.preventDefault();
+                    } else if (ev.key === 'ArrowLeft') {
+                        slc((g - 1 + d.length) % d.length);
+                        ev.preventDefault();
+                    } else if (ev.key === 'Enter') {
+                        E.subm.click();
+                    }
+                });
+                E.inp.addEventListener('input', function () {
+                    let v = this.value.toUpperCase().replace(/[^A-Z]/g, '');
+                    if (d[g].id === 'hng') {
+                        if (v.length > 0 && !E.inp.disabled) {
+                            d[g].sub(v.slice(-1));
+                        }
+                        this.value = '';
+                    } else {
+                        this.value = v;
+                    }
+                });
+                // start the app
+                slc(0);
+            })();
+        </script>
+    </body>
+</html>
